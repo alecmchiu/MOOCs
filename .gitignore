@@ -1,2 +1,4 @@
 #OS X Files
 .DS_Store
+
+*.txt
