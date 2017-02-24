@@ -13,10 +13,11 @@
  * Trie node definition
  */
 typedef struct node {
-    bool is_word;
-    struct node *children[27];
+    bool is_word; //store word boolean
+    struct node *children[27]; //store trie letter arrays
 } node;
 
+//keep track of root node
 node *root;
 
 /**
@@ -36,11 +37,15 @@ void initialize_node(node *n){
  */
 bool check(const char *word)
 {
+    
+    //start with root node
     node *current = root;
     
+    //traverse each letter
     int i = 0;
     char c = word[i];
     
+    //advance the pointer while not at end of word
     while (word[i] != '\0' && word[i] != '\n'){
         c = tolower(c);
         if (c == '\''){
@@ -50,6 +55,8 @@ bool check(const char *word)
             c = c - 'a';
         }
         current = current->children[(int)c];
+        
+        //if the pointer is NULL, stop searching
         if (current == NULL){
             return false;
         }
@@ -57,6 +64,7 @@ bool check(const char *word)
         c = word[i];
     }
     
+    //check final pointer
     if (current->is_word == true){
         return true;
     }
@@ -74,15 +82,24 @@ bool load(const char *dictionary)
         return false;
     }
     else {
+        
+        //open file
         FILE *dict = fopen(dictionary,"r");
         
+        //allocate and initialize root node
         root = malloc(sizeof(node));
         initialize_node(root);
         
+        //allocate memory for the string
         char *word = malloc(sizeof(char)*(LENGTH+2));
         
+        //grab characters until new line
         while (fgets(word,LENGTH+2,dict) != NULL){
+            
+            //keep track of current node
             node *current = root;
+            
+            //iterate through string
             int i = 0;
             char c = tolower(word[i]);
             while (c != '\0' && c != '\n'){
@@ -92,23 +109,27 @@ bool load(const char *dictionary)
                 else {
                     c = c - 'a';
                 }
+                // if the next pointer doesn't exist, make it
                 if (current->children[(int)c] == NULL){
                     node *child = malloc(sizeof(node));
                     initialize_node(child);
                     current->children[(int)c] = child;
                     current = child;
                 }
+                //else only advance the pointer
                 else {
                     current = current->children[(int)c];
                 }
                 i++;
                 c = tolower(word[i]);
             }
+            // if end of word, set node's word boolean to true
             if (c != '\0'){
                 current->is_word = true;
             }
         }
         
+        //deallocate word string's memory and close file
         free(word);
         fclose(dict);
         return true;
@@ -121,8 +142,10 @@ bool load(const char *dictionary)
 
 unsigned int recursive_size(node* current){
     
+    //word counter
     unsigned int number = 0;
     
+    //base cases
     if (current == NULL){
         return 0;
     }
@@ -132,6 +155,7 @@ unsigned int recursive_size(node* current){
         }
     }
     
+    //recursively add up the numbers from the children
     for (int i = 0; i < 27; ++i){
         number += recursive_size(current->children[i]);
     }
@@ -159,16 +183,22 @@ unsigned int size(void)
 
 bool recursive_unload(node *current){
     
+    //check if no children
+    
     bool empty = true;
     for (int i = 0; i < 27; ++i){
         if (current->children[i] != NULL){
             empty = false;
         }
     }
+    
+    //base case, if no children, dealloc memory
     if (empty == true){
         free (current);
         return true;
     }
+    
+    //else recursively check and deallocate children
     else {
         for (int i = 0; i < 27; ++i){
             if (current->children[i] != NULL){
@@ -177,6 +207,7 @@ bool recursive_unload(node *current){
         }
     }
     
+    //dealloc the root node
     free(current);
     
     return true;
