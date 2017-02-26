@@ -1,0 +1,2 @@
+#nullify global gitignore for requirements.txt
+!requirements.txt
