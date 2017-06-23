@@ -13,6 +13,7 @@ Code written from various Massive Open Online Courses
 + UCSD Bioinformatics II - Genome Sequencing (Bioinformatics II)
 + LAFF: Linear Algebra - Foundations and Frontiers
 + Nand2Tetris
-+ MITx: 6.00.1.x - Introduction to Computer Science and Programming Using Python(MIT Python Part 1)
++ MITx: 6.00.1.x - Introduction to Computer Science and Programming Using Python (MIT Python Part 1)
++ Cluster Analysis in Data Mining
 
 
