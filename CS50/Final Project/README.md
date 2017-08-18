@@ -17,14 +17,15 @@ Benchmark
 ---
 **Training Set**
 Live: 20/30 (66.7%)
-Dead: 21/26 (80.8%)
 
+Dead: 21/26 (80.8%)
 **Testing Set**
 Live: 14/22 (63.4%)
-Dead: 11/19 (57.9%)
 
+Dead: 11/19 (57.9%)
 **Overall**
 Train: 41/56 (73.2%)
+
 Test: 25/41 (61.0%)
 
 [1]: https://data.broadinstitute.org/bbbc/BBBC010/
