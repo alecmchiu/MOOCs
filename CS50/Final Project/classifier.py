@@ -58,7 +58,7 @@ def getCurvature(contour, step):
 
 if __name__ == '__main__':
 
-	if len(sys.argv) != 2:
+	if len(sys.argv) != 3:
 		print("Usage: python classifier.py directory output_file",file=sys.stderr)
 		exit(1)
 	else:
@@ -130,6 +130,7 @@ if __name__ == '__main__':
 			if each >= 1:
 				high_curv += 1
 		#print(high_curv)
+		#print(high_curv/len(all_curv))
 		averages.append(high_curv)
 		#averages.append(all_curv.count(float("Inf")))
 
@@ -190,16 +191,18 @@ if __name__ == '__main__':
 # 	print(each)
 # print("------")
 # print("Average ratio: {}".format(np.mean(ratios)))
-print("Average high_curv: {}".format(np.mean(averages)))
-print("Median high_curv: {}".format(np.median(averages)))
+#print("Average high_curv: {}".format(np.mean(averages)))
+#print("Median high_curv: {}".format(np.median(averages)))
 
-# output_file = open(sys.argv[2], "w+")
-# for each in averages:
-# 	dist_live = abs(111.5 - each)
-# 	dist_dead = abs(97.5 - each)
-# 	status = "Live" if dist_live < dist_dead else "Dead"
-# 	output_file.write(status + "\n")
-# output_file.close()
+output_file = open(sys.argv[2], "w+")
+for each in averages:
+	dist_live = abs(111.5 - each)
+	dist_dead = abs(97.5 - each)
+	#dist_live = abs(0.025373315715109375 - each)
+	#dist_dead = abs(0.02262154817694747 - each)
+	status = "Live" if dist_live < dist_dead else "Dead"
+	output_file.write(status + "\n")
+output_file.close()
 exit(0)
 
 
